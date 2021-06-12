@@ -42,6 +42,7 @@
 
 .app-list-item.like .fa-heart {
     opacity: 1;
+    color: red;
     transform: translateX(0px);
 }
 
