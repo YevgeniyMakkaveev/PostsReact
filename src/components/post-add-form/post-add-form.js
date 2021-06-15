@@ -12,7 +12,7 @@ const PostAddForm =() =>{
    <button 
    type='submit'
    className='btn btn-outline-secondary'
-   >Долбавить</button>
+   >Добавить</button>
   </form>
  )
 }
