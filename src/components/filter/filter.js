@@ -1,9 +1,30 @@
-import React from 'react'
-const PostStatusFilter =() =>{
- return(
+import React, { Component } from 'react'
+
+export default class PostStatusFilter extends Component {
+ constructor(props){
+  super(props);
+  this.buttons=[
+   {name: 'all', label: 'Все'},
+   {name: 'like', label: 'Понравилось'},
+   {name: 'important', label: 'Избранные'}
+   
+  ]
+ }
+ render(){
+  const buttons = this.buttons.map(({name, label})=>{
+   const active = this.props.filter === name;
+   const classss= active? 'btn-info': 'btn-outline-secondary'
+   return(
+   <button type="button"
+    key={name}
+    className={`btn ${classss}`}
+    onClick={()=>{this.props.onFilterSelect(name)}}>
+    {label}
+    </button>
+  )} )
+ {return(
  <div className ='btn-group'>
- <button type="button" className='btn btn-info'>Все</button>
- <button type="button" className='btn btn-outline-secondary'>Понравилось</button>
- </div>)
-}
-export default PostStatusFilter
+ {buttons}
+ 
+ </div> )}
+}}

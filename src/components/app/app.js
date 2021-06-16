@@ -14,13 +14,17 @@ export default class App extends Component{
     {label: 'Learning React', important: true, like: false, id: 1},
     {label: 'Not learning React', important: false, like: false, id: 2},
     {label: 'Sleep', important: false, like: false, id: 3}
-  ]
+  ],
+  tearm: '',
+  filter: 'all'
 
     }
     this.deleteItem=this.deleteItem.bind(this)
     this.addItem=this.addItem.bind(this)
     this.onToggleImportant=this.onToggleImportant.bind(this)
     this.onToggleLiked=this.onToggleLiked.bind(this)
+    this.onUpdateSearch=this.onUpdateSearch.bind(this)
+    this.onFilterSelect=this.onFilterSelect.bind(this)
     this.maxId= 4
   }
 
@@ -69,10 +73,36 @@ export default class App extends Component{
      })
    }
 
+   searchPost(items, tearm){
+    if(tearm.length === 0){
+      return items
+    }
+    return items.filter((items)=>{
+      return items.label.indexOf(tearm) >-1
+    })
+   }
+   onUpdateSearch(tearm){
+     this.setState({tearm})
+   }
+
+   filterPost(items, filter){
+     if(filter ==='like'){
+       return items.filter(item=>item.like)
+     } else if(filter ==='important'){
+       return items.filter(item=>item.important)
+     } else
+      return items
+   }
+   onFilterSelect(filter){
+     this.setState({filter})
+   }
+
   render(){
-    const {data}=this.state
+    const {data, tearm, filter}=this.state
     const liked = data.filter(item =>item.like).length;
     const allPost=data.length;
+
+    const visiblePosts = this.filterPost(this.searchPost(data, tearm), filter)
  
 
  return (
@@ -81,11 +111,15 @@ export default class App extends Component{
  liked={liked}
  allPost={allPost}/>
  <div className='search-pannel d-flex' >
-<SearchPannel/>
-<PostStatusFilter/>
+<SearchPannel 
+onUpdateSearch ={this.onUpdateSearch}/>
+<PostStatusFilter 
+filter={filter}
+onFilterSelect={this.onFilterSelect}
+/>
 
   </div>
-  <PostList posts={this.state.data}
+  <PostList posts={visiblePosts}
   onDelete={this.deleteItem}
   onToggleImportant={this.onToggleImportant}
   onToggleLiked={this.onToggleLiked}/>
