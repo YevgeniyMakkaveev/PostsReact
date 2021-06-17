@@ -22,9 +22,10 @@ export default class PostStatusFilter extends Component {
     {label}
     </button>
   )} )
- {return(
+ 
+   return(
  <div className ='btn-group'>
  {buttons}
  
- </div> )}
+ </div> )
 }}
